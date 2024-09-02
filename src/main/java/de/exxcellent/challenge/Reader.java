@@ -3,30 +3,27 @@ package de.exxcellent.challenge;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
 public class Reader {
-    public static void readFromCSV(String filePath) {
 
-       try(BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-           String line;
-           int minSpread = Integer.MAX_VALUE;
-           int minSpreadDay = -1;
-           br.readLine();
+    public static <T> List<T> readFromCSV(String filePath, Function<String[], T> mapper) {
+        List<T> dataList = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            br.readLine();
 
-           while((line = br.readLine()) != null)  {
-               String[] weatherData = line.split(",");
-               int day = Integer.parseInt(weatherData[0]);
-               int spread = Integer.parseInt(weatherData[1]) - Integer.parseInt(weatherData[2]);
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+                T dataObject = mapper.apply(data);
+                dataList.add(dataObject);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-               if (minSpread > spread) {
-                   minSpread = spread;
-                   minSpreadDay = day;
-               }
-           }
-           System.out.printf("Day with smallest temperature spread : %d%n", minSpreadDay);
-
-       } catch (IOException e) {
-           e.printStackTrace();
-       }
+        return dataList;
     }
 }
