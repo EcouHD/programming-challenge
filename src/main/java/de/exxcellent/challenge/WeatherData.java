@@ -1,6 +1,6 @@
 package de.exxcellent.challenge;
 
-public class WeatherData {
+public class WeatherData implements Data{
     private int day;
     private int maxTemp;
     private int minTemp;
@@ -23,7 +23,13 @@ public class WeatherData {
         return minTemp;
     }
 
-    public int getTempSpread() {
+    @Override
+    public int getSpread() {
         return (maxTemp - minTemp);
+    }
+
+    @Override
+    public String getId() {
+        return String.valueOf(day);
     }
 }

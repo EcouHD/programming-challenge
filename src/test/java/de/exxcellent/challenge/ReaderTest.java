@@ -30,7 +30,7 @@ class ReaderTest {
     }
 
 
-    @Test void readFromCSV_ValidData() throws IOException {
+    @Test void readFromCSV_ValidWeatherData() throws IOException {
         // given
         createTestCSV("Day,MxT,MnT\n1,20,10\n2,15,12");
 
@@ -64,8 +64,38 @@ class ReaderTest {
             return new WeatherData(day, maxTemp, minTemp);
         });
 
+        List<FootballData> footballDataList = Reader.readFromCSV(testFilePath, data -> {
+            String name = data[0];
+            int goals = Integer.parseInt(data[5]);
+            int goalsAllowed = Integer.parseInt(data[6]);
+            return new FootballData(name, goals, goalsAllowed);
+        });
+
         // then
         assertTrue(weatherDataList.isEmpty());
+        assertTrue(footballDataList.isEmpty());
+    }
+
+    @Test void readFromCSV_ValidFootballData() throws IOException {
+        // given
+        createTestCSV("Team,Goals,GoalsAllowed\nArsenal,79,36\nLiverpool,67,30");
+
+        // when
+        List<FootballData> footballDataList = Reader.readFromCSV(testFilePath, data -> {
+            String name = data[0];
+            int goals = Integer.parseInt(data[5]);
+            int goalsAllowed = Integer.parseInt(data[6]);
+            return new FootballData(name, goals, goalsAllowed);
+        });
+
+        // then
+        assertEquals(2, footballDataList.size());
+        assertEquals("Arsenal", footballDataList.get(0).getName());
+        assertEquals(79, footballDataList.get(0).getGoals());
+        assertEquals(36, footballDataList.get(0).getGoalsAllowed());
+        assertEquals("Liverpool", footballDataList.get(1).getName());
+        assertEquals(67, footballDataList.get(1).getGoals());
+        assertEquals(30, footballDataList.get(1).getGoalsAllowed());
     }
 
     /**

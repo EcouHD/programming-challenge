@@ -18,12 +18,6 @@ public final class App {
 
         // Your preparation code …
 
-        String dayWithSmallestTempSpread = "Someday";     // Your day analysis function call …
-        System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
-
-        String teamWithSmallestGoalSpread = "A good team"; // Your goal analysis function call …
-        System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
-
         List<WeatherData> weatherDataList = Reader.readFromCSV("src/main/resources/de/exxcellent/challenge/weather.csv", data -> {
             int day = Integer.parseInt(data[0]);
             int maxTemp = Integer.parseInt(data[1]);
@@ -31,8 +25,18 @@ public final class App {
             return new WeatherData(day, maxTemp, minTemp);
         });
 
-        int minSpreadDay = Calculation.getDayWithSmallestTemperatureSpread(weatherDataList);
+        String dayWithSmallestTempSpread = Calculation.getIdentifierWithSmallestSpread(weatherDataList);;     // Your day analysis function call …
+        System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
 
-        System.out.printf("Day with smallest temperature spread : %d%n", minSpreadDay);
+        List<FootballData> footballDataList = Reader.readFromCSV("src/main/resources/de/exxcellent/challenge/football.csv", data -> {
+            String name = data[0];
+            int goals = Integer.parseInt(data[5]);
+            int goalsAllowed = Integer.parseInt(data[6]);
+            return new FootballData(name, goals, goalsAllowed);
+        });
+
+        String teamWithSmallestGoalSpread = Calculation.getIdentifierWithSmallestSpread(footballDataList);; // Your goal analysis function call …
+        System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
+
     }
 }
