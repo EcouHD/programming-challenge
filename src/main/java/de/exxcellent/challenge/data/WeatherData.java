@@ -1,6 +1,6 @@
-package de.exxcellent.challenge;
+package de.exxcellent.challenge.data;
 
-public class WeatherData implements Data{
+public class WeatherData implements Data {
     private int day;
     private int maxTemp;
     private int minTemp;

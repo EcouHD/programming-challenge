@@ -1,4 +1,4 @@
-package de.exxcellent.challenge;
+package de.exxcellent.challenge.data;
 
 public class FootballData implements Data {
     private String name;

@@ -9,6 +9,13 @@ import java.util.function.Function;
 
 public class Reader {
 
+    /**
+     * Module method to read from CSV
+     * @param filePath
+     * @param mapper
+     * @param <T>
+     * @return
+     */
     public static <T> List<T> readFromCSV(String filePath, Function<String[], T> mapper) {
         List<T> dataList = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {

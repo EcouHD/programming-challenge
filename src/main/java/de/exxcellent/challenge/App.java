@@ -1,5 +1,8 @@
 package de.exxcellent.challenge;
 
+import de.exxcellent.challenge.data.FootballData;
+import de.exxcellent.challenge.data.WeatherData;
+
 import java.util.List;
 
 /**

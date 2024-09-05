@@ -1,5 +1,7 @@
 package de.exxcellent.challenge;
 
+import de.exxcellent.challenge.data.FootballData;
+import de.exxcellent.challenge.data.WeatherData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -83,8 +85,8 @@ class ReaderTest {
         // when
         List<FootballData> footballDataList = Reader.readFromCSV(testFilePath, data -> {
             String name = data[0];
-            int goals = Integer.parseInt(data[5]);
-            int goalsAllowed = Integer.parseInt(data[6]);
+            int goals = Integer.parseInt(data[1]);
+            int goalsAllowed = Integer.parseInt(data[2]);
             return new FootballData(name, goals, goalsAllowed);
         });
 
