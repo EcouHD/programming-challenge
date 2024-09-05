@@ -31,8 +31,10 @@ class ReaderTest {
 
 
     @Test void readFromCSV_ValidData() throws IOException {
+        // given
         createTestCSV("Day,MxT,MnT\n1,20,10\n2,15,12");
 
+        // when
         List<WeatherData> weatherDataList = Reader.readFromCSV(testFilePath, data -> {
             int day = Integer.parseInt(data[0]);
             int maxTemp = Integer.parseInt(data[1]);
@@ -40,6 +42,7 @@ class ReaderTest {
             return new WeatherData(day, maxTemp, minTemp);
         });
 
+        // then
         assertEquals(2, weatherDataList.size());
         assertEquals(1, weatherDataList.get(0).getDay());
         assertEquals(10, weatherDataList.get(0).getMinTemp());
@@ -50,8 +53,10 @@ class ReaderTest {
     }
 
     @Test void readFromCSV_EmptyFile() throws IOException {
+        // given
         createTestCSV("");
 
+        // when
         List<WeatherData> weatherDataList = Reader.readFromCSV(testFilePath, data -> {
             int day = Integer.parseInt(data[0]);
             int maxTemp = Integer.parseInt(data[1]);
@@ -59,6 +64,7 @@ class ReaderTest {
             return new WeatherData(day, maxTemp, minTemp);
         });
 
+        // then
         assertTrue(weatherDataList.isEmpty());
     }
 
@@ -74,7 +80,11 @@ class ReaderTest {
         assertTrue(exception.getMessage().contains("File not found"));
     }
 
-
+    /**
+     * helper method to create a dummy CSV file
+     * @param content
+     * @throws IOException
+     */
     private void createTestCSV(String content) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(testFilePath))) {
             writer.write(content);
